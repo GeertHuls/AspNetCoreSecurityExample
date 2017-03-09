@@ -50,8 +50,14 @@ namespace AspNetSecurity_m1
 
             app.UseDeveloperExceptionPage();
 
+            //Add the HSTS header in order to enforce ssl!
             if (!env.IsDevelopment())
-                app.UseHsts(c => c.MaxAge(days: 365));
+                app.UseHsts(c => c.MaxAge(days: 365)
+                //The preload option will enforce ssl even
+                //with first call ever to the site.
+                //First register your domain first at
+                //https://hstspreload.appspot.com
+                .Preload());
 
             app.UseStaticFiles();
           
