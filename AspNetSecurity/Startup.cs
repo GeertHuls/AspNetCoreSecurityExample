@@ -41,6 +41,7 @@ namespace AspNetSecurity_m1
         {
             loggerFactory.AddConsole();
 
+            // Csp prevents loading inline javascript, preventing XSS attacks.
             app.UseCsp(options => options.DefaultSources(s => s.Self())
                     .StyleSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
                     .FontSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
