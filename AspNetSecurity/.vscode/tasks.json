@@ -7,7 +7,7 @@
         {
             "taskName": "build",
             "args": [
-                "${workspaceRoot}\\AspNetSecurity-m1.csproj"
+                "${workspaceRoot}\\AspNetSecurity.csproj"
             ],
             "isBuildCommand": true,
             "problemMatcher": "$msCompile"

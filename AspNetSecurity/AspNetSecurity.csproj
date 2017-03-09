@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>AspNetSecurity-m1</AssemblyName>
+    <AssemblyName>AspNetSecurity</AssemblyName>
     <OutputType>Exe</OutputType>
-    <PackageId>AspNetSecurity-m1</PackageId>
+    <PackageId>AspNetSecurity</PackageId>
     <RuntimeFrameworkVersion>1.1.0</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
