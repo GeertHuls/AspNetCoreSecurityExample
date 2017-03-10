@@ -21,6 +21,7 @@ namespace AspNetSecurity_m1
         {
             services.AddMvc();
 
+            // Setup Access-Control-Allow-Origin header
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowBankCom", 
