@@ -47,6 +47,7 @@ namespace AspNetSecurity_m1
                     .FontSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
             );
 
+            // Sets the X-Frame-Options header to prevent click jacking attacks.
             app.UseXfo(o => o.Deny());
 
             app.UseDeveloperExceptionPage();
