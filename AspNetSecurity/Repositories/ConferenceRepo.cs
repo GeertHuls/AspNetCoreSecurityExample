@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AspNetSecurity_m1.Models;
+using AspNetSecurity.Models;
 
-namespace AspNetSecurity_m1.Repositories
+namespace AspNetSecurity.Repositories
 {
     public class ConferenceRepo
     {

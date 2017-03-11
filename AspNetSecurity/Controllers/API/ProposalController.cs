@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AspNetSecurity_m1.Models;
-using AspNetSecurity_m1.Repositories;
+using AspNetSecurity.Models;
+using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetSecurity_m1.Controllers.API
+namespace AspNetSecurity.Controllers.API
 {
     [EnableCors("AllowBankCom")]
     [Route("api/[controller]")]

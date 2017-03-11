@@ -1,8 +1,8 @@
-﻿using AspNetSecurity_m1.Models;
-using AspNetSecurity_m1.Repositories;
+﻿using AspNetSecurity.Models;
+using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetSecurity_m1.Controllers
+namespace AspNetSecurity.Controllers
 {
     public class ConferenceController: Controller
     {

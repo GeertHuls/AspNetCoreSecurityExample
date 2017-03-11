@@ -1,4 +1,4 @@
-﻿namespace AspNetSecurity_m1.Models
+﻿namespace AspNetSecurity.Models
 {
     public class AttendeeModel
     {

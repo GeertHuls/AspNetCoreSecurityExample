@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace AspNetSecurity_m1
+namespace AspNetSecurity
 {
     public class Program
     {

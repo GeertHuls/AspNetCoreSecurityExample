@@ -1,5 +1,5 @@
 ﻿using System;
-using AspNetSecurity_m1.Repositories;
+using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NWebsec.AspNetCore.Middleware;
 
-namespace AspNetSecurity_m1
+namespace AspNetSecurity
 {
     public class Startup
     {
