@@ -8,6 +8,7 @@
     <PackageId>AspNetSecurity</PackageId>
     <RuntimeFrameworkVersion>1.1.0</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+	  <UserSecretsId>test-6c7397de-e58e-4bd1-95af-4971e9899ae6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,10 +22,15 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.IISIntegration" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="1.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.0" />
     <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="1.0.0-gamma1-15" />
   </ItemGroup>
 
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
+  </ItemGroup>
 </Project>

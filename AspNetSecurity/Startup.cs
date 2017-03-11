@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NWebsec.AspNetCore.Middleware;
@@ -37,6 +39,12 @@ namespace AspNetSecurity
             services.AddSingleton<ProposalRepo>();
             services.AddSingleton<AttendeeRepo>();
             services.AddSingleton<PurposeStringConstants>();
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddUserSecrets();
+            var configuration = builder.Build();
+            var databasepwd = configuration["databasepwd"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
