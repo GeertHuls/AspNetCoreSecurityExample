@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSecurity.Repositories
 {
+
     public class AttendeeRepo
     {
         private readonly List<AttendeeModel> attendees = new List<AttendeeModel>();

@@ -20,6 +20,7 @@ namespace AspNetSecurity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddDataProtection();
 
             // Setup Access-Control-Allow-Origin header
             services.AddCors(options =>
@@ -35,6 +36,7 @@ namespace AspNetSecurity
             services.AddSingleton<ConferenceRepo>();
             services.AddSingleton<ProposalRepo>();
             services.AddSingleton<AttendeeRepo>();
+            services.AddSingleton<PurposeStringConstants>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

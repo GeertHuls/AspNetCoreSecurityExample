@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using AspNetSecurity.Models;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace AspNetSecurity.Repositories
 {
     public class ConferenceRepo
     {
         private readonly List<ConferenceModel> conferences = new List<ConferenceModel>();
+        private readonly IDataProtector _protector;
 
-        public ConferenceRepo()
+        public ConferenceRepo(IDataProtectionProvider dataProtectionProvider, PurposeStringConstants constants)
         {
-            conferences.Add(new ConferenceModel { Id = 1, Name = "NDC", Location = "Oslo", Start = new DateTime(2017, 6, 12)});
-            conferences.Add(new ConferenceModel { Id = 2, Name = "IT/DevConnections", Location = "San Francisco", Start = new DateTime(2017, 10, 18)});
+            _protector = dataProtectionProvider.CreateProtector(constants.ConferenceIdQueryString);
+
+            conferences.Add(new ConferenceModel { Id = 1, Name = "NDC", EncryptedId = _protector.Protect("1"), Location = "Oslo", Start = new DateTime(2017, 6, 12)});
+            conferences.Add(new ConferenceModel { Id = 2, Name = "IT/DevConnections", EncryptedId = _protector.Protect("2"), Location = "San Francisco", Start = new DateTime(2017, 10, 18)});
+
         }
         public IEnumerable<ConferenceModel> GetAll()
         {
@@ -27,6 +32,7 @@ namespace AspNetSecurity.Repositories
         public void Add(ConferenceModel model)
         {
             model.Id = conferences.Max(c => c.Id) + 1;
+            model.EncryptedId = _protector.Protect(model.Id.ToString());
             conferences.Add(model);
         }
     }
