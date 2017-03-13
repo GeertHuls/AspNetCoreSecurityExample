@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,6 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NWebsec.AspNetCore.Middleware;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using AspNetSecurity.Models;
 
 namespace AspNetSecurity
 {
@@ -42,11 +44,25 @@ namespace AspNetSecurity
 
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddUserSecrets();
+                .AddJsonFile("appsettings.json")
+                //.AddUserSecrets() // disable because of error during ef migration
+                ;
             var configuration = builder.Build();
             // use dotnet cli to set secrets, ex:
             // > dotnet user-secrets set databasepwd secret
             var databasepwd = configuration["databasepwd"];
+
+            services.AddDbContext<IdentityDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("ConfArchConnection"),
+                    sqlOptions => sqlOptions.MigrationsAssembly("AspNetSecurity")));
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<IdentityDbContext>();
+
+            // Migrate new database, use Microsoft.EntityFrameworkCore.Tools.DotNet (see csproj file).
+            // The open command line:
+            // > dotnet ef migrations add initial
+            // > dotnet ef database update
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,6 +91,10 @@ namespace AspNetSecurity
                 .Preload());
 
             app.UseStaticFiles();
+
+            // Setup of cookie middleware needed to handle the cookie
+            // that the entity framework uses.
+            app.UseIdentity();
           
             app.UseMvc(routes =>
             {
