@@ -44,6 +44,8 @@ namespace AspNetSecurity
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddUserSecrets();
             var configuration = builder.Build();
+            // use dotnet cli to set secrets, ex:
+            // > dotnet user-secrets set databasepwd secret
             var databasepwd = configuration["databasepwd"];
         }
 
