@@ -56,7 +56,8 @@ namespace AspNetSecurity
                 options.UseSqlServer(configuration.GetConnectionString("ConfArchConnection"),
                     sqlOptions => sqlOptions.MigrationsAssembly("AspNetSecurity")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(
+                    opt => opt.Password.RequireNonAlphanumeric = false)
                 .AddEntityFrameworkStores<IdentityDbContext>();
 
             // Migrate new database, use Microsoft.EntityFrameworkCore.Tools.DotNet (see csproj file).
