@@ -15,10 +15,24 @@ namespace AspNetSecurity.Repositories
         {
             _protector = dataProtectionProvider.CreateProtector(constants.ConferenceIdQueryString);
 
-            conferences.Add(new ConferenceModel { Id = 1, Name = "NDC", EncryptedId = _protector.Protect("1"), Location = "Oslo", Start = new DateTime(2017, 6, 12)});
-            conferences.Add(new ConferenceModel { Id = 2, Name = "IT/DevConnections", EncryptedId = _protector.Protect("2"), Location = "San Francisco", Start = new DateTime(2017, 10, 18)});
-
+            conferences.Add(new ConferenceModel
+            {
+                Id = 1,
+                Name = "NDC",
+                EncryptedId = _protector.Protect("1"),
+                Location = "Oslo",
+                Start = new DateTime(2017, 6, 12)
+            });
+            conferences.Add(new ConferenceModel
+            {
+                Id = 2,
+                Name = "IT/DevConnections",
+                EncryptedId = _protector.Protect("2"),
+                Location = "San Francisco",
+                Start = new DateTime(2017, 10, 18)
+            });
         }
+
         public IEnumerable<ConferenceModel> GetAll()
         {
             return conferences;

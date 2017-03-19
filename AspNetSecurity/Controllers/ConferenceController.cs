@@ -4,18 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSecurity.Controllers
 {
-    public class ConferenceController: Controller
+    public class ConferenceController : Controller
     {
-        private readonly ConferenceRepo repo;
+        private readonly ConferenceRepo _repo;
 
         public ConferenceController(ConferenceRepo repo)
         {
-            this.repo = repo;
+            _repo = repo;
         }
+
         public IActionResult Index()
         {
             ViewBag.Title = "Organizer - Conference Overview";
-            return View(repo.GetAll());
+            return View(_repo.GetAll());
         }
 
         public IActionResult Add()
@@ -29,7 +30,7 @@ namespace AspNetSecurity.Controllers
         public IActionResult Add(ConferenceModel model)
         {
             if (ModelState.IsValid)
-                repo.Add(model);
+                _repo.Add(model);
 
             return RedirectToAction("Index");
         }

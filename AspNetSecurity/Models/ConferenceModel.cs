@@ -8,6 +8,7 @@ namespace AspNetSecurity.Models
         {
             Start = DateTime.Now;
         }
+
         public int Id { get; set; }
         public string EncryptedId { get; set; }
         public string Name { get; set; }

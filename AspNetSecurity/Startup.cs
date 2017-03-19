@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using NWebsec.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using AspNetSecurity.Models;
 
 namespace AspNetSecurity
 {
@@ -21,6 +20,7 @@ namespace AspNetSecurity
         {
             this.env = env;
         }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
@@ -29,7 +29,7 @@ namespace AspNetSecurity
             // Setup Access-Control-Allow-Origin header
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowBankCom", 
+                options.AddPolicy("AllowBankCom",
                     c => c.WithOrigins("https://bank.com"));
             });
 
@@ -43,8 +43,8 @@ namespace AspNetSecurity
             services.AddSingleton<PurposeStringConstants>();
 
             var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json")
                 //.AddUserSecrets() // disable because of error during ef migration
                 ;
             var configuration = builder.Build();
@@ -72,8 +72,8 @@ namespace AspNetSecurity
 
             // Csp prevents loading inline javascript, preventing XSS attacks.
             app.UseCsp(options => options.DefaultSources(s => s.Self())
-                    .StyleSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
-                    .FontSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
+                .StyleSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
+                .FontSources(s => s.Self().CustomSources("maxcdn.bootstrapcdn.com"))
             );
 
             // Sets the X-Frame-Options header to prevent click jacking attacks.
@@ -84,18 +84,18 @@ namespace AspNetSecurity
             //Add the HSTS header in order to enforce ssl!
             if (!env.IsDevelopment())
                 app.UseHsts(c => c.MaxAge(days: 365)
-                //The preload option will enforce ssl even
-                //with first call ever to the site.
-                //First register your domain first at
-                //https://hstspreload.appspot.com
-                .Preload());
+                    //The preload option will enforce ssl even
+                    //with first call ever to the site.
+                    //First register your domain first at
+                    //https://hstspreload.appspot.com
+                    .Preload());
 
             app.UseStaticFiles();
 
             // Setup of cookie middleware needed to handle the cookie
             // that the entity framework uses.
             app.UseIdentity();
-          
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

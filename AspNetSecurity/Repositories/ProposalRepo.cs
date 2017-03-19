@@ -3,7 +3,7 @@ using System.Linq;
 using AspNetSecurity.Models;
 
 namespace AspNetSecurity.Repositories
-{  
+{
     public class ProposalRepo
     {
         private readonly List<ProposalModel> proposals = new List<ProposalModel>();

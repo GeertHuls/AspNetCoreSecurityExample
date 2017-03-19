@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetSecurity.Repositories
 {
-
     public class AttendeeRepo
     {
         private readonly List<AttendeeModel> attendees = new List<AttendeeModel>();
@@ -13,8 +12,8 @@ namespace AspNetSecurity.Repositories
         public AttendeeRepo()
         {
             attendees.Add(new AttendeeModel {Id = 1, ConferenceId = 1, Name = "Anders Heijlsberg"});
-            attendees.Add(new AttendeeModel { Id = 2, ConferenceId = 1, Name = "Rob Eisenberg" });
-            attendees.Add(new AttendeeModel { Id = 3, ConferenceId = 2, Name = "John Mashmellow" });
+            attendees.Add(new AttendeeModel {Id = 2, ConferenceId = 1, Name = "Rob Eisenberg"});
+            attendees.Add(new AttendeeModel {Id = 3, ConferenceId = 2, Name = "John Mashmellow"});
         }
 
         [HttpGet("attendeeId")]
