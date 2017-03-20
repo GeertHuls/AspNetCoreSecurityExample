@@ -10,10 +10,63 @@ namespace AspNetSecurity.Models
     public class AccountController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(UserManager<IdentityUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public IActionResult Login(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+                var result =
+                    await
+                        _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
+                            lockoutOnFailure: false);
+                if (result.Succeeded)
+                    return RedirectToLocal(returnUrl);
+                if (result.RequiresTwoFactor)
+                {
+                    //
+                }
+                if (result.IsLockedOut)
+                {
+                    return View("Lockout");
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
+            }
+            return View(model);
+        }
+
+        /// <summary>
+        /// This method prevents redirection attacks:
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
+        private IActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Conference");
         }
 
         [HttpGet]
@@ -46,6 +99,13 @@ namespace AspNetSecurity.Models
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            return View("LoggedOut");
         }
     }
 }

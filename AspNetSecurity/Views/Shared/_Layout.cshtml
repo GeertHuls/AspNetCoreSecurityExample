@@ -1,5 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+<!DOCTYPE html>
 
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -16,6 +20,18 @@
         </div>
         <div class="col-md-9 titlecol">
             <span class="title">@ViewBag.Title</span>           
+        </div>
+        
+        <div class="col-md-2">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <span>@UserManager.GetUserName(User)</span>
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Logoff">Log off</a>
+            }
+            else
+            {
+                <a class="btn btn-primary" asp-controller="Account" asp-action="Register">Register</a>
+            }
         </div>
     </div>
         <div>
