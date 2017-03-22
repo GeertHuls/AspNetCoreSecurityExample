@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using AspNetSecurity.Data;
 using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,13 +53,13 @@ namespace AspNetSecurity
             // > dotnet user-secrets set databasepwd secret
             var databasepwd = configuration["databasepwd"];
 
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddDbContext<ConfArchDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("ConfArchConnection"),
                     sqlOptions => sqlOptions.MigrationsAssembly("AspNetSecurity")));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(
+            services.AddIdentity<ConfArchDbContext, IdentityRole>(
                     opt => opt.Password.RequireNonAlphanumeric = false)
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<ConfArchDbContext>();
 
             // Migrate new database, use Microsoft.EntityFrameworkCore.Tools.DotNet (see csproj file).
             // The open command line:

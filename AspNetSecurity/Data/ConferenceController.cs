@@ -1,9 +1,9 @@
-﻿using AspNetSecurity.Models;
+using AspNetSecurity.Models;
 using AspNetSecurity.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace AspNetSecurity.Controllers
+namespace AspNetSecurity.Data
 {
     [Authorize]
     public class ConferenceController : Controller

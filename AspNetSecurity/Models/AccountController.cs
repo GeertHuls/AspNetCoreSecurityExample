@@ -1,6 +1,7 @@
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AspNetSecurity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -9,14 +10,17 @@ namespace AspNetSecurity.Models
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<ConfArchUser> _userManager;
+        private readonly SignInManager<ConfArchUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AccountController(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AccountController(UserManager<ConfArchUser> userManager,
+            SignInManager<ConfArchUser> signInManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
         }
 
         [HttpGet]
@@ -81,12 +85,27 @@ namespace AspNetSecurity.Models
             if (!ModelState.IsValid)
                 return View("Error");
 
+            var user = new ConfArchUser
+            {
+                UserName = model.Email,
+                Email = model.Email
+            };
             var result = await _userManager.CreateAsync(
-                new IdentityUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email
-                }, model.Password);
+                user, model.Password);
+
+            if (!await _roleManager.RoleExistsAsync("Organizer"))
+            {
+                await _roleManager.CreateAsync(new IdentityRole { Name = "Organizer" });
+            }
+
+            if (!await _roleManager.RoleExistsAsync("Speaker"))
+            {
+                await _roleManager.CreateAsync(new IdentityRole { Name = "Speaker" });
+            }
+
+            await _userManager.AddToRoleAsync(user, model.Role);
+            await _userManager.AddClaimAsync(user, new Claim("technology", model.Technology));
+
 
             if (result.Succeeded)
             {

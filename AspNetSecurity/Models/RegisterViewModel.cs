@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace AspNetSecurity.Models
@@ -21,5 +22,11 @@ namespace AspNetSecurity.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name ="Role")]
+        public string Role { get; set; }
+
+        [Display(Name = "Preferred technology")]
+        public string Technology { get; set; }
     }
 }

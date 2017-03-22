@@ -3,68 +3,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using AspNetSecurity.Data;
 
 namespace AspNetSecurity.Migrations
 {
-    [DbContext(typeof(IdentityDbContext))]
-    [Migration("20170313213759_initial")]
-    partial class initial
+    [DbContext(typeof(ConfArchDbContext))]
+    partial class ConfArchDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex");
-
-                    b.ToTable("AspNetRoles");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("ClaimType");
-
-                    b.Property<string>("ClaimValue");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser", b =>
+            modelBuilder.Entity("AspNetSecurity.Data.ConfArchUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
+
+                    b.Property<DateTime>("BirthDate");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
@@ -107,6 +66,48 @@ namespace AspNetSecurity.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
@@ -184,7 +185,7 @@ namespace AspNetSecurity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
+                    b.HasOne("AspNetSecurity.Data.ConfArchUser")
                         .WithMany("Claims")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -192,7 +193,7 @@ namespace AspNetSecurity.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
+                    b.HasOne("AspNetSecurity.Data.ConfArchUser")
                         .WithMany("Logins")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -205,7 +206,7 @@ namespace AspNetSecurity.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityUser")
+                    b.HasOne("AspNetSecurity.Data.ConfArchUser")
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

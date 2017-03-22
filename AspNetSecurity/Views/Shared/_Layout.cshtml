@@ -1,9 +1,9 @@
-﻿@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+﻿@using AspNetSecurity.Data
+@using Microsoft.AspNetCore.Identity
 <!DOCTYPE html>
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<ConfArchUser> SignInManager
+@inject UserManager<ConfArchUser> UserManager
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
