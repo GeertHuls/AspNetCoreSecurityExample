@@ -1,8 +1,10 @@
 ﻿using System.IO;
 using AspNetSecurity.Data;
 using AspNetSecurity.Repositories;
+using AspNetSecurity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -57,7 +59,7 @@ namespace AspNetSecurity
                 options.UseSqlServer(configuration.GetConnectionString("ConfArchConnection"),
                     sqlOptions => sqlOptions.MigrationsAssembly("AspNetSecurity")));
 
-            services.AddIdentity<ConfArchDbContext, IdentityRole>(
+            services.AddIdentity<ConfArchUser, IdentityRole>(
                     opt => opt.Password.RequireNonAlphanumeric = false)
                 .AddEntityFrameworkStores<ConfArchDbContext>();
 
@@ -65,6 +67,10 @@ namespace AspNetSecurity
             // The open command line:
             // > dotnet ef migrations add initial
             // > dotnet ef database update
+
+            // Use custom claims principle factory to include the birthday claim
+            services.AddTransient<IUserClaimsPrincipalFactory<ConfArchUser>,
+                ConfArchUserClaimsPrincipalFactory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

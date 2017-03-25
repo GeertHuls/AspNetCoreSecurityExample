@@ -88,7 +88,8 @@ namespace AspNetSecurity.Models
             var user = new ConfArchUser
             {
                 UserName = model.Email,
-                Email = model.Email
+                Email = model.Email,
+                BirthDate = model.BirthDate
             };
             var result = await _userManager.CreateAsync(
                 user, model.Password);
@@ -103,12 +104,11 @@ namespace AspNetSecurity.Models
                 await _roleManager.CreateAsync(new IdentityRole { Name = "Speaker" });
             }
 
-            await _userManager.AddToRoleAsync(user, model.Role);
-            await _userManager.AddClaimAsync(user, new Claim("technology", model.Technology));
-
-
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, model.Role);
+                await _userManager.AddClaimAsync(user, new Claim("technology", model.Technology));
+
                 return View("RegistrationConfirmation");
             }
 

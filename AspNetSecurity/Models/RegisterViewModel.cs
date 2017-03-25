@@ -28,5 +28,7 @@ namespace AspNetSecurity.Models
 
         [Display(Name = "Preferred technology")]
         public string Technology { get; set; }
+
+        public DateTime BirthDate { get; set; }
     }
 }
