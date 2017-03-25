@@ -46,7 +46,8 @@ namespace AspNetSecurity.Models
                     return RedirectToLocal(returnUrl);
                 if (result.RequiresTwoFactor)
                 {
-                    //
+                    // https://github.com/aspnet/Identity/blob/dev/samples/IdentitySample.Mvc/Controllers/AccountController.cs#L69
+                    //return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 }
                 if (result.IsLockedOut)
                 {
