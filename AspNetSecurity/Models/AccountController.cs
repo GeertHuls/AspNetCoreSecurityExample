@@ -41,7 +41,7 @@ namespace AspNetSecurity.Models
                 var result =
                     await
                         _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                            lockoutOnFailure: false);
+                            lockoutOnFailure: true);
                 if (result.Succeeded)
                     return RedirectToLocal(returnUrl);
                 if (result.RequiresTwoFactor)
@@ -51,6 +51,7 @@ namespace AspNetSecurity.Models
                 }
                 if (result.IsLockedOut)
                 {
+                    //_logger.LogWarning(2, "User account locked out.");
                     return View("Lockout");
                 }
 
