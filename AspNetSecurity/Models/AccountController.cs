@@ -106,6 +106,23 @@ namespace AspNetSecurity.Models
 
             if (result.Succeeded)
             {
+
+                // Full article how to do this:
+                // https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity
+                //var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                //var callbackUrl = Url.Action(
+                //   "ConfirmEmail", "Account",
+                //   new { userId = user.Id, code = code },
+                //   protocol: Request.Url.Scheme);
+
+                //await UserManager.SendEmailAsync(user.Id,
+                //   "Confirm your account",
+                //   "Please confirm your account by clicking this link: <a href=\""
+                //                                   + callbackUrl + "\">link</a>");
+                //// ViewBag.Link = callbackUrl;   // Used only for initial demo.
+                //return View("DisplayEmail");
+
+
                 await _userManager.AddToRoleAsync(user, model.Role);
                 await _userManager.AddClaimAsync(user, new Claim("technology", model.Technology));
 
@@ -119,6 +136,32 @@ namespace AspNetSecurity.Models
 
             return View(model);
         }
+
+
+        //Example forgot password functionality:
+        // https://docs.microsoft.com/en-us/aspnet/identity/overview/features-api/account-confirmation-and-password-recovery-with-aspnet-identity
+        //public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = await UserManager.FindByNameAsync(model.Email);
+        //        if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+        //        {
+        //            // Don't reveal that the user does not exist or is not confirmed
+        //            return View("ForgotPasswordConfirmation");
+        //        }
+
+        //        var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+        //        var callbackUrl = Url.Action("ResetPassword", "Account",
+        //    new { UserId = user.Id, code = code }, protocol: Request.Url.Scheme);
+        //        await UserManager.SendEmailAsync(user.Id, "Reset Password",
+        //    "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+        //        return View("ForgotPasswordConfirmation");
+        //    }
+
+        //    // If we got this far, something failed, redisplay form
+        //    return View(model);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> LogOff()

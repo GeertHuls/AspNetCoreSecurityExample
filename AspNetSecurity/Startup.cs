@@ -61,7 +61,10 @@ namespace AspNetSecurity
 
             services.AddIdentity<ConfArchUser, IdentityRole>(
                     opt => opt.Password.RequireNonAlphanumeric = false)
-                .AddEntityFrameworkStores<ConfArchDbContext>();
+                .AddEntityFrameworkStores<ConfArchDbContext>()
+                // Token providers generate codes to do: email verification, email reset
+                // 2fa and phone number confirmation.
+                .AddDefaultTokenProviders();
 
             // Migrate new database, use Microsoft.EntityFrameworkCore.Tools.DotNet (see csproj file).
             // The open command line:
