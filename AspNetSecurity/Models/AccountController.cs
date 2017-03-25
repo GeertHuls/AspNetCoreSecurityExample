@@ -169,5 +169,38 @@ namespace AspNetSecurity.Models
             await _signInManager.SignOutAsync();
             return View("LoggedOut");
         }
+
+
+        // 2fa example code:
+        // https://github.com/aspnet/Identity/blob/dev/samples/IdentitySample.Mvc/Controllers/AccountController.cs#L350
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<ActionResult> SendCode(string returnUrl = null, bool rememberMe = false)
+        //{
+        //    var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        //    if (user == null)
+        //    {
+        //        return View("Error");
+        //    }
+        //    var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
+        //    var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+        //    return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        //}
+
+
+        //
+        // GET: /Account/VerifyCode
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> VerifyCode(string provider, bool rememberMe, string returnUrl = null)
+        //{
+        //    // Require that the user has already logged in via username/password or external login
+        //    var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
+        //    if (user == null)
+        //    {
+        //        return View("Error");
+        //    }
+        //    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        //}
     }
 }

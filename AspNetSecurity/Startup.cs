@@ -64,7 +64,11 @@ namespace AspNetSecurity
                 .AddEntityFrameworkStores<ConfArchDbContext>()
                 // Token providers generate codes to do: email verification, email reset
                 // 2fa and phone number confirmation.
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                
+                // use custom token provider:
+                //.AddTokenProvider<TopSecurityStampBasedTokenProvider<ConfArchUser>>("Custom token provider")
+                ;
 
             // Migrate new database, use Microsoft.EntityFrameworkCore.Tools.DotNet (see csproj file).
             // The open command line:
