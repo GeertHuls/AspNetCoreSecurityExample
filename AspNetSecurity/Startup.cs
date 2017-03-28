@@ -60,7 +60,42 @@ namespace AspNetSecurity
                     sqlOptions => sqlOptions.MigrationsAssembly("AspNetSecurity")));
 
             services.AddIdentity<ConfArchUser, IdentityRole>(
-                    opt => opt.Password.RequireNonAlphanumeric = false)
+                    opt =>
+                    {
+                        // change password policy
+                        opt.Password.RequireNonAlphanumeric = false;
+
+                        //change user policy
+                        opt.User.RequireUniqueEmail = true;
+
+                        // configure different names for the token providers
+                        //opt.Tokens.ChangeEmailTokenProvider
+
+                        // use different cookie
+                        // the appliation cookie holds the claims
+                        //opt.Cookies.ApplicationCookie
+                        // .ExpireTimespan = ...
+
+                        // cookie for external authentication provider:
+                        //opt.Cookies.ExternalCookie
+
+                        // cookies for 2fa config
+                        //opt.Cookies.TwoFactorRememberMeCookie;
+                        //opt.Cookies.TwoFactorUserIdCookie
+
+                        // lockout options:
+                        //opt.Lockout.AllowedForNewUsers (default to true)
+                        // .DefaultLockoutTimespan
+                        // .MaxFailedAccessAttemps
+
+                        // signin optoins:
+                        //opt.SignIn.RequireConfirmedEmail (defaults to false)
+                        // .RequireConfirmedPhoneNumber (defaults to false)
+
+                        // security stamp validation timespan
+                        // claims are re-read from the database to check whether they are invalid
+                        //opt.SecurityStampValidationInterval (default to 30 minutes)
+                    })
                 .AddEntityFrameworkStores<ConfArchDbContext>()
                 // Token providers generate codes to do: email verification, email reset
                 // 2fa and phone number confirmation.
